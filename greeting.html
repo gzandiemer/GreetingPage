@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+    <!--<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15"> 
+    The viewport meta tag tells the browser that the width of the screen should be considered the "Full Width" of the page. 
+    Meaning no matter the width of the device you are on, whether on desktop or mobile. 
+    the website will follow the width of the device the user is on-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Below helps browser to get turkish/german characters correctly-->
+    <meta charset="UTF-8"> 
+  <style type="text/css"> 
+
+    body {
+      background-image: url("img/evening.jpg");
+      height: 90vH; 
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+     border: solid;
+	   text-align: center;
+	   padding: 3px;
+	   font-family: "Bookman Old Style", serif;
+	   font-size: 40px;
+    }
+
+    p {
+      border: solid;
+      text-align: center;
+      padding: 3px;
+      font-family: "Bookman Old Style", serif;
+      font-size: 15px;
+    }
+
+    .box_margin {
+	   margin: 50px 30px;
+	   min-width: 300px;
+	   max-width: 500px;
+	   text-align: left;
+    }
+
+    .box-margin:first-child {
+	   margin-top: 0px !important; 
+    }
+	
+    .de {
+	   color: #02173D;
+	   background-color: #BF0B2C;
+    }
+
+	 .en {
+	   color: #0AA38C;
+	   background-color: #02173D; 
+    }
+
+	 .tr {
+	   color: #F5900F;
+	   background-color: #0AA38C; 
+    }
+  
+    .fr {
+	   margin: 35px 30px !important;
+	   color: #F24E13;
+	   background-color: #F5900F; 
+    }
+
+    #canvas {
+      width: 150px;
+      height: 150px;
+      /*left: 50%;
+      top: 50%;
+      opacity: 0.5;
+      filter: alpha(opacity=50);background-color: #FDFAF7; transform: translate(-50%, -50%); border-radius: 100%; top: 50%; border: 2px solid #E5E375;*/
+      margin-left: 100px;
+      margin-bottom: 20px;
+      padding: 50px;  
+    }
+  </style> 
+  </head>
+  <body>
+	 <!-- the closing style comes at very end-->
+	 <!-- if you don't put this important element, then it takes the first corder if hierarchy is same-->
+	 <!-- i used 90 instead of 100 to prevent scroll element and with vH one can size elements to be relative to the size of the viewport-->
+	 <div class="img-container">
+    <div id="js-content-gruesse" class="de box_margin"></div>
+		<div id="js-content-greeting" class="en box_margin"></div>
+		<div id="js-content-selamlama" class="tr box_margin"></div>
+		<div id="js-content-salutation" class="fr box_margin"></div>
+		
+		<script src="js/greet.js"></script>
+  </div>
+
+  <div>		
+   <canvas id="canvas" ></canvas>
+   <script>
+    	var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+      var radius = canvas.height / 2;
+      ctx.translate(radius, radius);
+      radius = radius * 0.90
+      setInterval(drawClock, 1000);
+
+      function drawClock() {
+        drawFace(ctx, radius);
+        drawNumbers(ctx, radius);
+        drawTime(ctx, radius);
+      }
+
+      function drawFace(ctx, radius) {
+        var grad;
+        ctx.beginPath();
+        ctx.arc(0, 0, radius, 0, 2*Math.PI);
+        ctx.fillStyle = 'white'; //inside the round dark blue #0000ffff
+        ctx.fill();
+        grad = ctx.createRadialGradient(0,0,radius*0.95, 0,0,radius*1.05);
+        grad.addColorStop(0, '#BF0B2C'); /*inner round, hourhand & vane (akrep ve yelkovan)*/
+        grad.addColorStop(0.5,'#F5900F'); //color of inside round 
+        grad.addColorStop(1, '#02173D'); //outer round
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = radius*0.1;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(0, 0, radius*0.1, 0, 2*Math.PI);
+        ctx.fillStyle = '#F5900F'; //color of numbers
+        ctx.fill();
+      }
+
+      function drawNumbers(ctx, radius) {
+        var ang;
+        var num;
+        ctx.font = radius*0.20 + "px Helvetica";
+        ctx.textBaseline="middle";
+        ctx.textAlign="center";
+
+        for(num = 1; num < 13; num++){
+          ang = num * Math.PI / 6;
+          ctx.rotate(ang);
+          ctx.translate(0, -radius*0.85);
+          ctx.rotate(-ang);
+          ctx.fillText(num.toString(), 0, 0);
+          ctx.rotate(ang);
+          ctx.translate(0, radius*0.85);
+          ctx.rotate(-ang);
+        }
+      }
+
+      function drawTime(ctx, radius){
+        var now = new Date();
+        var hour = now.getHours();
+        var minute = now.getMinutes();
+        var second = now.getSeconds();
+        //hour
+        hour=hour%12;
+        hour=(hour*Math.PI/6)+
+        (minute*Math.PI/(6*60))+
+        (second*Math.PI/(360*60));
+        drawHand(ctx, hour, radius*0.5, radius*0.07);
+        //minute
+        minute=(minute*Math.PI/30)+(second*Math.PI/(30*60));
+        drawHand(ctx, minute, radius*0.8, radius*0.07);
+        // second
+        second=(second*Math.PI/30);
+        drawHand(ctx, second, radius*0.9, radius*0.02);
+      }
+
+      function drawHand(ctx, pos, length, width) {
+        ctx.beginPath();
+        ctx.lineWidth = width;
+        ctx.lineCap = "round";
+        ctx.moveTo(0,0);
+        ctx.rotate(pos);
+        ctx.lineTo(0, -length);
+        ctx.stroke();
+        ctx.rotate(-pos);
+      }
+
+      /*
+      function writeBrandName(){
+        context.font = "25pt Helvetica";
+        context.color = "#F24E13";
+        var brandName = 'sunshine';
+        var brandNameSize = context.measureText(brandName);
+        context.strokeText("sunshine", 0 - brandNameSize.width / 2,-40);
+      }*/
+    </script>
+   
+  </div>
+
+
+  </body>
+  </html>
