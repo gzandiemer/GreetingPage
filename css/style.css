@@ -1,0 +1,78 @@
+body {
+  background-image: url('../img/evening.jpg');
+  height: 90vH;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  margin: 0;
+  font-family: "Bookman Old Style", serif;
+  text-align: center;
+  padding: 3px;
+  border: none;
+
+}
+img-container {
+  display: inline;
+  float:left;
+}
+
+.time-container {
+  display: inline;
+  float:right;
+}
+
+h1 {
+ font-size: 40px;
+}
+
+p {
+  font-size: 30px;
+  color: #02173D;
+  text-align:left;
+}
+
+.box_margin {
+ margin: 50px 30px;
+ min-width: 300px;
+ max-width: 500px;
+ text-align: left;
+ padding-left: 10px;
+}
+
+.box-margin:first-child {
+ margin-top: 0px !important;
+}
+
+.de {
+ color: #02173D;
+ background-color: #BF0B2C;
+}
+
+.en {
+ color: #0AA38C;
+ background-color: #02173D;
+}
+
+.tr {
+ color: #F5900F;
+ background-color: #0AA38C;
+}
+
+.fr {
+ margin: 35px 30px !important;
+ color: #F24E13;
+ background-color: #F5900F;
+}
+
+.date_box{
+
+}
+#canvas {
+  margin-left: 15px;
+
+  /*
+  filter: alpha(opacity=50);background-color: #FDFAF7; transform: translate(-50%, -50%); border-radius: 100%; top: 50%; border: 2px solid #E5E375;   margin-left: 100px;
+    margin-bottom: 20px;   padding: 50px;*/
+
+}
