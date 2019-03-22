@@ -12,7 +12,8 @@ body {
   border: none;
 
 }
-img-container {
+
+.img-container {
   display: inline;
   float:left;
 }
@@ -20,6 +21,7 @@ img-container {
 .time-container {
   display: inline;
   float:right;
+  margin-top:30px;
 }
 
 h1 {
@@ -65,14 +67,6 @@ p {
  background-color: #F5900F;
 }
 
-.date_box{
-
-}
 #canvas {
   margin-left: 15px;
-
-  /*
-  filter: alpha(opacity=50);background-color: #FDFAF7; transform: translate(-50%, -50%); border-radius: 100%; top: 50%; border: 2px solid #E5E375;   margin-left: 100px;
-    margin-bottom: 20px;   padding: 50px;*/
-
 }
