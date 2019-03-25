@@ -67,6 +67,10 @@ p {
  background-color: #F5900F;
 }
 
+.date-box {
+  margin-left: 25px;
+}
+
 #canvas {
   margin-left: 15px;
 }
